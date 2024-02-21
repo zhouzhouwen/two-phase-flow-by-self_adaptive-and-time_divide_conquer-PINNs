@@ -4,8 +4,6 @@ Wen Zhou1, Shuichiro Miwa1, Koji Okamoto1
 
 1Department of Nuclear Engineering and Management, School of Engineering, University of Tokyo, 7-3-1 Hongo, Bunkyo-ku, Tokyo 113-8654, Japan
 
-*Corresponding Author Email Address: miwa@n.t.u-tokyo.ac.jp 
-
 Abstract
 Physics-informed neural networks (PINNs) are emerging as a promising artificial intelligence approach for solving complex two-phase flow simulations. A critical challenge in these simulations are is accurate representation of the gas-liquid interface with different interface tracking methods. While numerous studies in conventional computational fluid dynamics (CFD) have addressed this issue, there remains a notable absence of research within the context of PINNs-based two phase flow simulations.
 
