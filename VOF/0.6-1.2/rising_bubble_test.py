@@ -346,7 +346,7 @@ axes = [ax1, ax2, ax3, ax4, ax5, ax6, ax7, ax8, ax9, ax10, a11, ax12]
 fig.subplots_adjust(wspace=0.000001, hspace=0.4)
 
 # 设置每个子图的标题
-titles = ['CFD benchmark u', 'CFD benchmark v', 'CFD benchmark p', 'CFD benchmark a', 'Improved PINNs u', 'Improved PINNs v', 'Improved PINNs p', 'Improved PINNs a', 'L1 error of u', 'L1 error of v', 'L1 error of p', 'L1 error of a']
+titles = ['CFD benchmark u', 'CFD benchmark v', 'CFD benchmark p', 'CFD benchmark a', 'AT PINNs u', 'AT PINNs v', 'AT PINNs p', 'AT PINNs a', 'L1 error of u', 'L1 error of v', 'L1 error of p', 'L1 error of a']
 for ax, title in zip(axes, titles):
     ax.set_title(title)
 
@@ -486,7 +486,7 @@ print("L1 error center_mass:", np.array(L1_error_center_mass))
 time_points = np.arange(1, real_a.shape[0]+1)
 plt.figure(figsize=(12, 6))
 plt.plot(time_points, center_mass_values_real, label='Center of mass by benchmark')
-plt.plot(time_points, center_mass_values_pre, label='Center of mass by improved PINNs')
+plt.plot(time_points, center_mass_values_pre, label='Center of mass by AT PINNs')
 plt.xlabel('Time')
 plt.title('Center of mass over time')
 plt.legend()
@@ -501,8 +501,11 @@ vc_values_pre = []
 
 # Define a function to calculate vc for a 2D slice
 def calculate_vc(matrix_slice, velocity_slice, x_coords, y_coords):
-    integral_num = np.sum(velocity_slice * (1 - matrix_slice) * y_coords[:, None], axis=(0, 1))
-    integral_den = np.sum(1 - matrix_slice, axis=(0, 1))
+    # integral_num = np.sum(velocity_slice * (1 - matrix_slice) * y_coords[:, None], axis=(0, 1))
+    # integral_den = np.sum(1 - matrix_slice, axis=(0, 1))
+
+    integral_num = np.sum(velocity_slice * (1 - matrix_slice), axis=(0, 1))
+    integral_den = np.sum((1 - matrix_slice), axis=(0, 1))
     vc = integral_num / integral_den if integral_den != 0 else 0
     return vc
 
@@ -524,7 +527,7 @@ print("L1_error_vc:", np.array(L1_error_vc))
 time_points = np.arange(1, real_a.shape[0]+1)
 plt.figure(figsize=(12, 6))
 plt.plot(time_points, vc_values_real, label='Vc by benchmark')
-plt.plot(time_points, vc_values_pre, label='Vc by improved PINNs')
+plt.plot(time_points, vc_values_pre, label='Vc by AT PINNs')
 plt.xlabel('Time')
 plt.title('Rising velocity over time')
 plt.legend()
